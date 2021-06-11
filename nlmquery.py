@@ -28,9 +28,13 @@ def open_connection(opts):
 def search(conn, idtype, identifier):
     query_string = None
     if idtype == 'nlmui':
-	query_string = '@attr 1=1062 %s' % str(identifier)
+        query_string = '@attr 1=1062 %s' % str(identifier)
     elif idtype == 'issn':
-        query_string = '@attr ' % str(identifier)
+        query_string = '@attr 1=8 %s' % str(identifier)
+    elif idtype == 'isbn':
+        query_string = '@attr 1=7 %s' % str(identifier)
+    else:
+        query_string = '@attr 1=12 2=3 %s' % str(identifier)
     query = zoom.Query('PQF', query_string)
     res = conn.search(query)
     for r in res:
